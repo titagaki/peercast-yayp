@@ -6,13 +6,13 @@ import (
 	"github.com/labstack/echo"
 )
 
-func ChannelStatistics() echo.HandlerFunc {
+func Chat() echo.HandlerFunc {
 
 	params := map[string]interface{}{
-		"title":  "Statistics",
+		"title":  "Chat",
 	}
 
 	return func(c echo.Context) error {
-		return c.Render(http.StatusOK, "getgmt.tmpl", params)
+		return c.Render(http.StatusOK, "chat.tmpl", params)
 	}
 }
