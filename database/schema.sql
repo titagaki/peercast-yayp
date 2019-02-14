@@ -26,13 +26,13 @@ CREATE TABLE IF NOT EXISTS channels (
   display_listeners  ENUM('show', 'hide') NOT NULL DEFAULT 'show', -- リスナー数表示/非表示 (ジャンルに?を入れることにより、リスナー数非表示となる)
   limit_type         ENUM('none', 'port0', 'speed', 'high_speed') NOT NULL DEFAULT 'none', -- 表示制限 (ジャンルに@を入れることにより、帯域制限やポート0の視聴制限を行える)
   permission         ENUM('allowed', 'denied') NOT NULL DEFAULT 'allowed', -- 掲載可否
-  is_deleted         ENUM('yes', 'no') NOT NULL DEFAULT 'no',              -- 削除フラグ
+  is_finished        ENUM('yes', 'no') NOT NULL DEFAULT 'no',              -- 終了しているか
   created            DATETIME NOT NULL,
   updated            DATETIME NOT NULL,
   PRIMARY KEY (id),
   INDEX idx_channel_id (channel_id),
   INDEX idx_channel_name (channel_name),
-  INDEX idx_permission_is_deleted (permission, is_deleted)
+  INDEX idx_permission_is_finished (permission, is_finished)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- チャンネルログ
@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS channel_logs (
   track_album        VARCHAR(100),                           -- トラック アルバム
   track_genre        VARCHAR(100),                           -- トラック ジャンル
   track_contact      VARCHAR(100),                           -- トラック コンタクトURL
+  display_listeners  ENUM('show', 'hide') NOT NULL DEFAULT 'show', -- リスナー数表示/非表示 (ジャンルに?を入れることにより、リスナー数非表示となる)
   PRIMARY KEY (id),
   UNIQUE INDEX idx_log_datetime_channel_name (log_datetime, channel_name),
   INDEX idx_channel_id (channel_id),
