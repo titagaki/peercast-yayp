@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"io"
 	"peercast-yayp/handler"
+	"peercast-yayp/job"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -18,6 +19,8 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 }
 
 func main() {
+	go job.RunScheduler()
+
 	e := echo.New()
 
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{

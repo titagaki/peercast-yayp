@@ -10,6 +10,14 @@
   version = "v3.2.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:4db2738e3625ff5b5752fd48e2e48f5b008790a7ac5d68b7663f380d2d5c4b39"
+  name = "github.com/jasonlvhit/gocron"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "6771d4b492ba2d5f57919c04b4cddb3735365120"
+
+[[projects]]
   digest = "1:efd601ad1d1189884f37ed075fadb5bbd17f1f5acf5862827247c6da56d125ba"
   name = "github.com/labstack/echo"
   packages = [
@@ -88,6 +96,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/jasonlvhit/gocron",
     "github.com/labstack/echo",
     "github.com/labstack/echo/middleware",
   ]
