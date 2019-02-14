@@ -1,2 +1,4 @@
-data
-vendor
+data/
+vendor/
+.idea
+.DS_Store

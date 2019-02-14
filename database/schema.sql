@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS channel_logs (
   track_genre        VARCHAR(100),                           -- トラック ジャンル
   track_contact      VARCHAR(100),                           -- トラック コンタクトURL
   PRIMARY KEY (id),
-  UNIQUE INDEX idx_log_datetime_channel_name (log_datetime, channel_name)
+  UNIQUE INDEX idx_log_datetime_channel_name (log_datetime, channel_name),
   INDEX idx_channel_id (channel_id),
   INDEX idx_channel_name (channel_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
