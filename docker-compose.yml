@@ -1,0 +1,30 @@
+version: '3'
+services:
+  yayp:
+    restart: always
+    build: .
+    ports:
+      - "8000:80"
+    container_name: yayp-web
+  peercast:
+    restart: always
+    build: 
+      context: .
+      dockerfile: Dockerfile.peercast
+      args:
+        - PORT=${PEERCAST_PORT}
+        - PASSWORD=${PEERCAST_PASSWORD}
+    ports:
+      - "${PEERCAST_PORT}:${PEERCAST_PORT}"
+    container_name: yayp-peercast
+  mariadb:
+    restart: always
+    image: mariadb:10.3
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"  
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
+    container_name: yayp-mariadb

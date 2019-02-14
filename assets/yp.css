@@ -1,0 +1,144 @@
+body {
+	background-color: #222222;
+	color: #eeeeee;
+}
+
+h2 {
+	background-color: #555555;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	padding-left: 8px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin-top: 0px;
+	margin-bottom: 8px;
+	border-left: #dddddd 2px solid;
+	border-right: #dddddd 2px solid;
+}
+
+ul {
+	margin-left: 20px;
+}
+
+ol {
+	margin-left: 28px;
+}
+
+th {
+	border: #666666 1px solid;
+	background-color: #555555;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+td {
+	border: #666666 1px solid;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	line-height: 1.2;
+}
+
+td.nb {
+	padding: 0px;
+	border: 0px;
+}
+
+A:link { 
+	color: #aad5ff;
+	text-decoration: none;
+}
+
+A:visited {
+	color: #aad5ff;
+	text-decoration: none;
+}
+
+A:hover {
+	color: #99cc66;
+	text-decoration: underline;
+}
+
+div {
+	margin-bottom: 8px;
+}
+
+div.header {
+}
+
+div.footer {
+	font-size: 90%;
+}
+
+div.setting {
+	font-size: 80%;
+	padding-left: 6px;
+	border-left: #dddddd 2px solid;
+	line-height: 1.1;
+}
+
+div.powered {
+	font-size: 80%;
+	font-weight: bold;
+}
+
+table.chlist {
+	font-size: 80%;
+}
+
+td.cn {
+	text-align: center;
+	white-space: nowrap;
+}
+
+span.pass {
+	color: #00ff00;
+	font-weight: bold;
+}
+
+span.rejected {
+	color: #ff0000;
+	font-weight: bold;
+}
+
+span.fast {
+	color: #00ff00;
+	font-weight: bold;
+}
+
+span.slow {
+	color: #ff8800;
+	font-weight: bold;
+}
+
+span.play {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 120%;
+	font-weight: bold;
+}
+
+span.direct {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 90%;
+	font-weight: bold;
+}
+
+span.check {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	color: #ffbbbb;
+	font-weight: bold;
+}
+
+span.name {
+	font-weight: bold;
+}
+
+span.board {
+	font-weight: bold;
+}
+
+span.setting {
+	font-weight: bold;
+}

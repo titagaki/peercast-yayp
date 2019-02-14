@@ -1,0 +1,113 @@
+body {
+	background-color: #222222;
+	color: #eeeeee;
+}
+
+h2 {
+	background-color: #555555;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	padding-left: 8px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin-top: 0px;
+	margin-bottom: 8px;
+	border-left: #dddddd 2px solid;
+	border-right: #dddddd 2px solid;
+}
+
+h4 {
+	border-left   : 10px solid;
+	padding-left  : 6px;
+	font-family   : Verdana,Arial,Helvetica,sans-serif;
+	margin-bottom : 5px;
+}
+
+A:link { 
+	color: #aad5ff;
+	text-decoration: none;
+}
+
+A:visited {
+	color: #aad5ff;
+	text-decoration: none;
+}
+
+A:hover {
+	color: #99cc66;
+	text-decoration: underline;
+}
+
+div {
+	margin-bottom: 8px;
+}
+
+div.main {
+	margin-left: 130px;
+}
+
+div.side {
+	position        : absolute;
+	top             : 0px;
+	left            : 0px;
+	width           : 130px;
+	padding         : 4px;
+}
+
+div.powered {
+	font-size: 80%;
+	font-weight: bold;
+}
+
+table.calendar {
+	font-size       : 80%;
+}
+
+table.log {
+	font-size       : 80%;
+}
+
+th {
+	border : #666666 1px solid;
+	background-color : #555555;
+}
+
+td.a {
+	background-color: #000000;
+	text-align: right;
+	white-space: nowrap;
+}
+
+td.b {
+	text-align: right;
+	white-space: nowrap;
+}
+
+td.idx {
+	font-weight: bold;
+}
+
+td.rn {
+	padding-left: 5px;
+	padding-right: 4px;
+	border-left: #111111 1px solid;
+	border-bottom: #111111 1px solid;
+	text-align: right;
+	white-space: nowrap;
+}
+
+td.cn {
+	padding-left: 5px;
+	padding-right: 4px;
+	border-left: #111111 1px solid;
+	border-bottom: #111111 1px solid;
+	text-align: center;
+	white-space: nowrap;
+}
+
+td.n {
+	padding-left: 5px;
+	padding-right: 4px;
+	border-left: #111111 1px solid;
+	border-bottom: #111111 1px solid;
+	white-space: nowrap;
+}

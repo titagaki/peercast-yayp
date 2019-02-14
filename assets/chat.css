@@ -1,0 +1,55 @@
+body {
+	font-family: "ＭＳ Ｐゴシック";
+	background-color: #222222;
+	color: #eeeeee;
+}
+
+h2 {
+	background-color: #555555;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	padding-left: 8px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin-top: 0px;
+	margin-bottom: 8px;
+	border-left: #dddddd 2px solid;
+	border-right: #dddddd 2px solid;
+}
+
+A:link { 
+	color: #aad5ff;
+	text-decoration: none;
+}
+
+A:visited {
+	color: #aad5ff;
+	text-decoration: none;
+}
+
+div {
+	margin-bottom: 8px;
+}
+
+div.header {
+}
+
+div.powered {
+	font-size: 80%;
+	font-weight: bold;
+}
+
+span.no {
+	color: #aad5ff;
+}
+
+span.na {
+	color: #99ff99;
+}
+
+span.da {
+	color: #cccccc;
+}
+
+span.id {
+	color: #cccccc;
+}
