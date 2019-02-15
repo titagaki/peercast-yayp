@@ -2,20 +2,17 @@ version: '3'
 services:
   yayp:
     restart: always
-    build: .
+    build: ../../
     ports:
       - "8000:80"
     container_name: yayp-web
   peercast:
     restart: always
-    build: 
-      context: .
-      dockerfile: Dockerfile.peercast
-      args:
-        - PORT=${PEERCAST_PORT}
-        - PASSWORD=${PEERCAST_PASSWORD}
+    image: titagaki/peercast-yt:latest
     ports:
-      - "${PEERCAST_PORT}:${PEERCAST_PORT}"
+      - "${PEERCAST_PORT}:7144"
+    volumes:
+      - ./data/peercast.ini:/peercast-yt/peercast.ini
     container_name: yayp-peercast
   mariadb:
     restart: always
