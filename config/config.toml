@@ -1,11 +1,10 @@
 [yp]
-    yp_name = "035p"
-	PortCheck = true                # ポートチェックの有無
-	PortCheckDefOff = true 			# モード選択記号がない場合にポートチェックを使うか否か
+    yp_name = "mp"
 	SpeedCheck = true               # 帯域チェックの有無
 	MossoLine = 2000                # 低速・高速回線の判断基準
-	CheckIntervalPass = 60*11	    # ポートチェックの間隔 Pass時
-	CheckIntervalReject = 15		# ポートチェックの間隔 Rejected時
+    title = "Yet Another PeerCast Yellow Pages"
+	myDomain = "www.mydomain.com"
+	ShowChannels = 10                # １ページに表示するチャンネル数
 
 [database]
     host = "yayp-mariadb"
@@ -17,8 +16,3 @@
 [peercast]
     port = "7145"
     host = "yayp-peercast"
-
-[site]
-    title = "Yet Another PeerCast Yellow Pages"
-	myDomain = 'www.mydomain.com'
-	ShowChannels = 10                # １ページに表示するチャンネル数
