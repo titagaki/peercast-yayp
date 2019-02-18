@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS channels (
   `track_genre`      VARCHAR(255), -- トラック ジャンル
   `track_contact`    VARCHAR(255), -- トラック コンタクトURL
   `is_host_direct`   TINYINT(1),   -- 直接接続の許可
-  `hidden_listeners` TINYINT(1),   -- リスナー数表示/非表示 (ジャンルに?を入れることにより、リスナー数非表示となる)
-  `is_playing`       TINYINT(1),   -- 終了しているか
+  `hidden_listeners` TINYINT(1),   -- リスナー非表示か (ジャンルに?を入れることにより、リスナー数非表示となる)
+  `is_playing`       TINYINT(1),   -- 配信中かどうか
   `is_banned`        TINYINT(1),   -- 掲載可否
   `created_at`       TIMESTAMP NULL,
   `updated_at`       TIMESTAMP NULL,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS channel_logs (
   `track_album`      VARCHAR(255), -- トラック アルバム
   `track_genre`      VARCHAR(255), -- トラック ジャンル
   `track_contact`    VARCHAR(255), -- トラック コンタクトURL
-  `hidden_listeners` TINYINT(1),   -- リスナー数表示/非表示 (ジャンルに?を入れることにより、リスナー数非表示となる)
+  `hidden_listeners` TINYINT(1),   -- リスナー非表示か (ジャンルに?を入れることにより、リスナー数非表示となる)
   PRIMARY KEY (`id`),
   UNIQUE INDEX uix_channel_logs_log_time_name (`log_time`, `name`),
   INDEX idx_channel_logs_channel_id (`channel_id`)
