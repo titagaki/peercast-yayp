@@ -33,10 +33,13 @@ func main() {
 	}
 	e.Renderer = renderer
 
-	e.GET("/", handler.TopPage())
 	e.GET("/index.txt", handler.IndexTxt())
-	e.GET("/getgmt.*", handler.ChannelStatistics())
-	e.GET("/chat.*", handler.Chat())
+	e.GET("/api/getChannels", handler.GetChannels())
+	e.GET("/api/getChannelLogs", handler.GetChannelLogs())
+
+	//e.GET("/", handler.TopPage())
+	//e.GET("/getgmt.*", handler.ChannelStatistics())
+	//e.GET("/chat.*", handler.Chat())
 
 	e.Static("/*", "public")
 
