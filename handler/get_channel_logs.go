@@ -27,7 +27,7 @@ func GetChannelLogs() echo.HandlerFunc {
 	}
 }
 
-func parseDateStr(str string) (time.Time, bool) {
+func parseDateStr(str string) (t time.Time, ok bool) {
 	if len(str) != 8 {
 		return time.Time{}, false
 	}

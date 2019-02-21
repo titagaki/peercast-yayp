@@ -8,6 +8,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	// go.uber.org/zap
 )
 
 type TemplateRenderer struct {
@@ -28,18 +29,15 @@ func main() {
 	}))
 	e.Use(middleware.Recover())
 
-	renderer := &TemplateRenderer{
-		templates: template.Must(template.ParseGlob("views/*.tmpl")),
-	}
-	e.Renderer = renderer
+	//renderer := &TemplateRenderer{
+	//	templates: template.Must(template.ParseGlob("views/*.tmpl")),
+	//}
+	//e.Renderer = renderer
 
 	e.GET("/index.txt", handler.IndexTxt())
-	e.GET("/api/getChannels", handler.GetChannels())
-	e.GET("/api/getChannelLogs", handler.GetChannelLogs())
-
-	//e.GET("/", handler.TopPage())
-	//e.GET("/getgmt.*", handler.ChannelStatistics())
-	//e.GET("/chat.*", handler.Chat())
+	e.GET("/api/channels", handler.GetChannels())
+	e.GET("/api/channelLogs", handler.GetChannelLogs())
+	e.GET("/api/channelDailyLogs", handler.GetChannelLogs())
 
 	e.Static("/*", "public")
 
