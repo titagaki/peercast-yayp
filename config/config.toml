@@ -1,18 +1,13 @@
 [yp]
-    yp_name = "mp"
-	SpeedCheck = true               # 帯域チェックの有無
-	MossoLine = 2000                # 低速・高速回線の判断基準
-    title = "Yet Another PeerCast Yellow Pages"
-	myDomain = "www.mydomain.com"
-	ShowChannels = 10                # １ページに表示するチャンネル数
+    prefix = "mp"
 
 [database]
-    host = "yayp-mariadb"
-    port = "3306"
-    dbname = yayp
-    user = root
-    pass = password
+    host   = "localhost"
+    port   = "3306"
+    user   = "root"
+    password = "password"
+    db     = "yayp"
 
 [peercast]
-    port = "7145"
-    host = "yayp-peercast"
+    port   = "7145"
+    host   = "yayp-peercast"

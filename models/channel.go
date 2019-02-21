@@ -8,12 +8,11 @@ type Channel struct {
 	ID              uint
 	GnuID           string `gorm:"size:32"`
 	Name            string `gorm:"index"`
-	Tip             string `gorm:"size:53"`
 	Bitrate         int
 	ContentType     string
 	Listeners       int
 	Relays          int
-	Age             int
+	Age             uint
 	Genre           string
 	Description     string
 	Url             string
@@ -23,10 +22,10 @@ type Channel struct {
 	TrackAlbum      string
 	TrackGenre      string
 	TrackContact    string
-	IsHostDirect    bool
 	HiddenListeners bool
+	TrackerIP       string `gorm:"size:53"`
+	TrackerDirect   bool
 	IsPlaying       bool `gorm:"index"`
-	IsBanned        bool
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
 }

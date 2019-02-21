@@ -23,7 +23,7 @@ type Channel struct {
 	Uptime      uint   `xml:"uptime,attr"`
 	Skip        bool   `xml:"skip,attr"`
 	Comment     string `xml:"comment,attr"`
-	Age         int    `xml:"age,attr"`
+	Age         uint   `xml:"age,attr"`
 	Bcflags     bool   `xml:"bcflags,attr"`
 	ChanHitStat struct {
 		Hosts      int       `xml:"Hosts,attr"`

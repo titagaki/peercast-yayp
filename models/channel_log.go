@@ -14,7 +14,7 @@ type ChannelLog struct {
 	ContentType     string
 	Listeners       int
 	Relays          int
-	Age             int
+	Age             uint
 	Genre           string
 	Description     string
 	Url             string

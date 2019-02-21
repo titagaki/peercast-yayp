@@ -3,11 +3,13 @@ package handler
 import (
 	"errors"
 	"net/http"
-	"peercast-yayp/models"
 	"strconv"
 	"time"
 
 	"github.com/labstack/echo"
+
+	"peercast-yayp/config"
+	"peercast-yayp/models"
 )
 
 func GetChannelLogs() echo.HandlerFunc {
@@ -20,7 +22,11 @@ func GetChannelLogs() echo.HandlerFunc {
 			return errors.New("error")
 		}
 
-		db, _ := models.NewDB("root:password@/yayp?charset=utf8&parseTime=True&loc=Local")
+		db, err := models.NewDB(config.GetConfig())
+		if err != nil {
+			return err
+		}
+
 		logs := db.FindChannelLogsByNameAndLogTime(cn, logTime)
 
 		return c.JSON(http.StatusOK, logs)

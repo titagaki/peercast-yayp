@@ -1,13 +1,15 @@
 package main
 
 import (
+	"flag"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"html/template"
 	"io"
+	"peercast-yayp/config"
 	"peercast-yayp/handler"
 	"peercast-yayp/job"
 
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
 	// go.uber.org/zap
 )
 
@@ -20,6 +22,15 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 }
 
 func main() {
+	configPath := flag.String("config", "config/config.toml", "path of the config file")
+	flag.Parse()
+
+	// Read config
+	_, err := config.FromFile(*configPath)
+	if err != nil {
+		panic(err)
+	}
+
 	go job.RunScheduler()
 
 	e := echo.New()

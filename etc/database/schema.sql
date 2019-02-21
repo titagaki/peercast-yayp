@@ -4,12 +4,11 @@ CREATE TABLE IF NOT EXISTS channels (
   `id`               INT UNSIGNED AUTO_INCREMENT,
   `gnu_id`           VARCHAR(32),  -- チャンネルID
   `name`             VARCHAR(100), -- チャンネル名
-  `tip`              VARCHAR(53),  -- トラッカーIP
   `bitrate`          INT,          -- ビットレート (単位はkbps)
   `content_type`     VARCHAR(255), -- コンテナタイプ (WMV,FLV,MKVなど)
   `listeners`        INT,          -- リスナー数
   `relays`           INT,          -- リレー数
-  `age`              INT,          -- 配信時間 (秒数)
+  `age`              INT UNSIGNED, -- 配信時間 (秒数)
   `genre`            VARCHAR(255), -- ジャンル
   `description`      VARCHAR(255), -- 概要
   `url`              VARCHAR(255), -- コンタクトURL
@@ -19,10 +18,10 @@ CREATE TABLE IF NOT EXISTS channels (
   `track_album`      VARCHAR(255), -- トラック アルバム
   `track_genre`      VARCHAR(255), -- トラック ジャンル
   `track_contact`    VARCHAR(255), -- トラック コンタクトURL
-  `is_host_direct`   TINYINT(1),   -- 直接接続の許可
   `hidden_listeners` TINYINT(1),   -- リスナー非表示か (ジャンルに?を入れることにより、リスナー数非表示となる)
+  `tracker_ip`       VARCHAR(53),  -- トラッカーIP
+  `tracker_direct`   TINYINT(1),   -- 直接接続の許可
   `is_playing`       TINYINT(1),   -- 配信中かどうか
-  `is_banned`        TINYINT(1),   -- 掲載可否
   `created_at`       TIMESTAMP NULL,
   `updated_at`       TIMESTAMP NULL,
   PRIMARY KEY (`id`),
@@ -41,7 +40,7 @@ CREATE TABLE IF NOT EXISTS channel_logs (
   `content_type`     VARCHAR(255), -- コンテナタイプ (WMV,FLV,MKVなど)
   `listeners`        INT,          -- リスナー数
   `relays`           INT,          -- リレー数
-  `age`              INT,          -- 配信時間 (秒数)
+  `age`              INT UNSIGNED, -- 配信時間 (秒数)
   `genre`            VARCHAR(255), -- ジャンル
   `description`      VARCHAR(255), -- 概要
   `url`              VARCHAR(255), -- コンタクトURL
