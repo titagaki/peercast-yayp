@@ -29,8 +29,8 @@ func GetChannelLogs() echo.HandlerFunc {
 		}
 		defer db.Close()
 
-		channelRepo := repositoriy.NewChannelRepository(db)
-		logs := channelRepo.FindChannelLogsByNameAndLogTime(cn, logTime)
+		channelLogRepo := repositoriy.NewChannelLogRepository(db)
+		logs := channelLogRepo.FindChannelLogsByNameAndLogTime(cn, logTime)
 
 		return c.JSON(http.StatusOK, logs)
 	}

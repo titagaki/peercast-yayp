@@ -1,9 +1,11 @@
 package handler
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/labstack/echo"
+	gocache "github.com/patrickmn/go-cache"
 
 	"peercast-yayp/config"
 	"peercast-yayp/infrastructure"
@@ -12,14 +14,21 @@ import (
 
 func GetChannels() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		db, err := infrastructure.NewDB(config.GetConfig())
-		if err != nil {
-			return err
+		cache, ok := c.Get("cache").(*gocache.Cache)
+		if !ok {
+			return errors.New("can't available cache")
 		}
-		defer db.Close()
 
-		channelRepo := repositoriy.NewChannelRepository(db)
-		channels := channelRepo.FindPlayingChannels()
+		channels, ok := repositoriy.NewCachedChannelRepository(cache).GetChannels()
+		if !ok {
+			db, err := infrastructure.NewDB(config.GetConfig())
+			if err != nil {
+				return err
+			}
+			defer db.Close()
+
+			channels = repositoriy.NewChannelRepository(db).FindPlayingChannels()
+		}
 
 		return c.JSON(http.StatusOK, channels)
 	}

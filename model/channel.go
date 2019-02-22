@@ -7,7 +7,7 @@ import (
 type Channel struct {
 	ID              uint
 	GnuID           string `gorm:"size:32"`
-	Name            string `gorm:"size:100;index"`
+	Name            string `gorm:"index"`
 	Bitrate         int
 	ContentType     string
 	Listeners       int
@@ -25,9 +25,9 @@ type Channel struct {
 	HiddenListeners bool
 	TrackerIP       string `gorm:"size:53"`
 	TrackerDirect   bool
-	IsPlaying       bool `gorm:"index"`
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
+	IsPlaying       bool      `gorm:"index"`
+	CreatedAt       time.Time `json:"-"`
+	UpdatedAt       time.Time `json:"-"`
 }
 
 type ChannelList []*Channel

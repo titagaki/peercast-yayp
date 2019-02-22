@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 	"html"
 	"net/http"
@@ -12,14 +13,17 @@ import (
 
 	"peercast-yayp/config"
 	"peercast-yayp/infrastructure"
-	"peercast-yayp/model"
 	"peercast-yayp/repositoriy"
 )
 
 func IndexTxt() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		cache, ok := c.Get("cache").(*gocache.Cache)
+		if !ok {
+			return errors.New("can't available cache")
+		}
 
-		channels, ok := getCachedCannels(c)
+		channels, ok := repositoriy.NewCachedChannelRepository(cache).GetChannels()
 		if !ok {
 			db, err := infrastructure.NewDB(config.GetConfig())
 			if err != nil {
@@ -27,8 +31,7 @@ func IndexTxt() echo.HandlerFunc {
 			}
 			defer db.Close()
 
-			channelRepo := repositoriy.NewChannelRepository(db)
-			channels = channelRepo.FindPlayingChannels()
+			channels = repositoriy.NewChannelRepository(db).FindPlayingChannels()
 		}
 
 		s := make([]byte, 0, 100)
@@ -81,20 +84,6 @@ func IndexTxt() echo.HandlerFunc {
 		}
 		return c.String(http.StatusOK, string(s))
 	}
-}
-
-func getCachedCannels(c echo.Context) (model.ChannelList, bool) {
-	cache, ok := c.Get("cache").(*gocache.Cache)
-	if !ok {
-		return nil, false
-	}
-
-	channels, ok := cache.Get("ChannelList")
-	if !ok {
-		return nil, false
-	}
-
-	return channels.(model.ChannelList), true
 }
 
 func btos(b bool) string {

@@ -9,7 +9,7 @@ type ChannelLog struct {
 	LogTime         time.Time `gorm:"type:datetime;unique_index:uix_channel_logs_log_time_name"`
 	ChannelID       uint      `gorm:"index"`
 	GnuID           string    `gorm:"size:32"`
-	Name            string    `gorm:"size:100;unique_index:uix_channel_logs_log_time_name"`
+	Name            string    `gorm:"unique_index:uix_channel_logs_log_time_name"`
 	Bitrate         int
 	ContentType     string
 	Listeners       int
