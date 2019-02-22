@@ -2,8 +2,12 @@ package peercast
 
 import (
 	"encoding/xml"
+	"fmt"
+	"net/http"
 
 	"github.com/pkg/errors"
+
+	"peercast-yayp/config"
 )
 
 type StatXML struct {
@@ -75,4 +79,22 @@ func GetStatXML() (*StatXML, error) {
 	}
 
 	return &data, nil
+}
+
+func requestViewStatXML() (*http.Response, error) {
+	cfg := config.GetConfig()
+	viewStatXML := fmt.Sprintf("http://%s:%s/admin?cmd=viewxml",
+		cfg.Peercast.Host, cfg.Peercast.Port)
+
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", viewStatXML, nil)
+	if err != nil {
+		return nil, err
+	}
+	if cfg.Peercast.AuthType == "basic" {
+		req.SetBasicAuth(cfg.Peercast.AuthUser, cfg.Peercast.AuthPassword)
+	}
+	resp, err := client.Do(req)
+
+	return resp, err
 }

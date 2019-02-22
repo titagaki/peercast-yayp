@@ -25,7 +25,6 @@ func (db *ChannelRepository) SaveOrCreate(channel *model.Channel) {
 }
 
 func (db *ChannelRepository) FindPlayingChannels() []*model.Channel {
-
 	channel := make([]*model.Channel, 0)
 	db.Where("is_playing = ?", true).Find(&channel)
 
@@ -33,7 +32,6 @@ func (db *ChannelRepository) FindPlayingChannels() []*model.Channel {
 }
 
 func (db *ChannelRepository) FindChannelDailyLogByName(name string) []*model.ChannelDailyLog {
-
 	logs := make([]*model.ChannelDailyLog, 0)
 	db.Where("name = ?", name).Find(&logs)
 

@@ -12,6 +12,6 @@
 [peercast]
     Host         = "localhost"
     Port         = "7145"
-    Auth         = "basic"
+    AuthType     = "basic"
     AuthUser     = "root"
     AuthPassword = "peer"
