@@ -16,6 +16,7 @@ func GetChannels() echo.HandlerFunc {
 		if err != nil {
 			return err
 		}
+		defer db.Close()
 
 		channelRepo := repositoriy.NewChannelRepository(db)
 		channels := channelRepo.FindPlayingChannels()

@@ -25,6 +25,7 @@ func IndexTxt() echo.HandlerFunc {
 			if err != nil {
 				return err
 			}
+			defer db.Close()
 
 			channelRepo := repositoriy.NewChannelRepository(db)
 			channels = channelRepo.FindPlayingChannels()
@@ -51,11 +52,11 @@ func IndexTxt() echo.HandlerFunc {
 			s = append(s, "<>"...)
 			s = append(s, html.EscapeString(c.Description)...)
 			s = append(s, "<>"...)
-			s = append(s, html.EscapeString(strconv.Itoa(listeners))...)
+			s = append(s, strconv.Itoa(listeners)...)
 			s = append(s, "<>"...)
-			s = append(s, html.EscapeString(strconv.Itoa(relays))...)
+			s = append(s, strconv.Itoa(relays)...)
 			s = append(s, "<>"...)
-			s = append(s, html.EscapeString(strconv.Itoa(c.Bitrate))...)
+			s = append(s, strconv.Itoa(c.Bitrate)...)
 			s = append(s, "<>"...)
 			s = append(s, html.EscapeString(c.ContentType)...)
 			s = append(s, "<>"...)
@@ -75,7 +76,7 @@ func IndexTxt() echo.HandlerFunc {
 			s = append(s, "<>"...)
 			s = append(s, html.EscapeString(c.Comment)...)
 			s = append(s, "<>"...)
-			s = append(s, html.EscapeString(btos(c.TrackerDirect))...)
+			s = append(s, btos(c.TrackerDirect)...)
 			s = append(s, "\n"...)
 		}
 		return c.String(http.StatusOK, string(s))

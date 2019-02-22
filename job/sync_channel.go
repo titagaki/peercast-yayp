@@ -24,6 +24,8 @@ func SyncChannel(cache *gocache.Cache) {
 		// ToDo: log
 		return
 	}
+	defer db.Close()
+
 	channelRepo := repositoriy.NewChannelRepository(db)
 	channels := channelRepo.FindPlayingChannels()
 
