@@ -30,6 +30,8 @@ func GetChannels() echo.HandlerFunc {
 			channels = repositoriy.NewChannelRepository(db).FindPlayingChannels()
 		}
 
+		channels = channels.HideListeners()
+
 		return c.JSON(http.StatusOK, channels)
 	}
 }

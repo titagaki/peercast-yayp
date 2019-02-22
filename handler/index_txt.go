@@ -34,15 +34,11 @@ func IndexTxt() echo.HandlerFunc {
 			channels = repositoriy.NewChannelRepository(db).FindPlayingChannels()
 		}
 
+		channels = channels.HideListeners()
+
 		s := make([]byte, 0, 100)
 
 		for _, c := range channels {
-			listeners := c.Listeners
-			relays := c.Relays
-			if c.HiddenListeners {
-				listeners = -1
-				relays = -1
-			}
 			s = append(s, html.EscapeString(c.Name)...)
 			s = append(s, "<>"...)
 			s = append(s, html.EscapeString(c.GnuID)...)
@@ -55,9 +51,9 @@ func IndexTxt() echo.HandlerFunc {
 			s = append(s, "<>"...)
 			s = append(s, html.EscapeString(c.Description)...)
 			s = append(s, "<>"...)
-			s = append(s, strconv.Itoa(listeners)...)
+			s = append(s, strconv.Itoa(c.Listeners)...)
 			s = append(s, "<>"...)
-			s = append(s, strconv.Itoa(relays)...)
+			s = append(s, strconv.Itoa(c.Relays)...)
 			s = append(s, "<>"...)
 			s = append(s, strconv.Itoa(c.Bitrate)...)
 			s = append(s, "<>"...)

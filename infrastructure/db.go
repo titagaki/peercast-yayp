@@ -11,7 +11,7 @@ import (
 )
 
 func NewDB(cfg *config.Config) (*gorm.DB, error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True&loc=Local",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True&loc=Local&timeout=15s",
 		cfg.Database.User,
 		cfg.Database.Password,
 		cfg.Database.Host,

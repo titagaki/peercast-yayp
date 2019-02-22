@@ -22,7 +22,7 @@ func (db *ChannelRepository) SaveOrCreate(channel *model.Channel) {
 	}
 }
 
-func (db *ChannelRepository) FindPlayingChannels() []*model.Channel {
+func (db *ChannelRepository) FindPlayingChannels() model.ChannelList {
 	channel := make([]*model.Channel, 0)
 	db.Where("is_playing = ?", true).Find(&channel)
 
