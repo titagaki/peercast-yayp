@@ -9,7 +9,8 @@ import (
 	"github.com/labstack/echo"
 
 	"peercast-yayp/config"
-	"peercast-yayp/models"
+	"peercast-yayp/database"
+	"peercast-yayp/repositoriy"
 )
 
 func GetChannelLogs() echo.HandlerFunc {
@@ -22,12 +23,13 @@ func GetChannelLogs() echo.HandlerFunc {
 			return errors.New("error")
 		}
 
-		db, err := models.NewDB(config.GetConfig())
+		db, err := database.NewDB(config.GetConfig())
 		if err != nil {
 			return err
 		}
 
-		logs := db.FindChannelLogsByNameAndLogTime(cn, logTime)
+		channelRepo := repositoriy.NewChannelRepository(db)
+		logs := channelRepo.FindChannelLogsByNameAndLogTime(cn, logTime)
 
 		return c.JSON(http.StatusOK, logs)
 	}

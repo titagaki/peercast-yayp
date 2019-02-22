@@ -1,16 +1,21 @@
 package main
 
 import (
+	"context"
 	"flag"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"fmt"
 	"html/template"
 	"io"
+	"os"
+	"os/signal"
+	"time"
+
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+
 	"peercast-yayp/config"
 	"peercast-yayp/handler"
 	"peercast-yayp/job"
-
-	// go.uber.org/zap
 )
 
 type TemplateRenderer struct {
@@ -21,12 +26,26 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
+func setRenderer(e *echo.Echo) {
+	renderer := &TemplateRenderer{
+		templates: template.Must(template.ParseGlob("views/*.tmpl")),
+	}
+	e.Renderer = renderer
+}
+
+func routes(e *echo.Echo) {
+	e.GET("/index.txt", handler.IndexTxt())
+	e.GET("/api/channels", handler.GetChannels())
+	e.GET("/api/channelLogs", handler.GetChannelLogs())
+	e.GET("/api/channelDailyLogs", handler.GetChannelLogs())
+	e.Static("/*", "public")
+}
+
 func main() {
 	configPath := flag.String("config", "config/config.toml", "path of the config file")
 	flag.Parse()
 
-	// Read config
-	_, err := config.FromFile(*configPath)
+	cfg, err := config.FromFile(*configPath)
 	if err != nil {
 		panic(err)
 	}
@@ -40,17 +59,26 @@ func main() {
 	}))
 	e.Use(middleware.Recover())
 
-	//renderer := &TemplateRenderer{
-	//	templates: template.Must(template.ParseGlob("views/*.tmpl")),
-	//}
-	//e.Renderer = renderer
+	//setRenderer(e)
+	routes(e)
 
-	e.GET("/index.txt", handler.IndexTxt())
-	e.GET("/api/channels", handler.GetChannels())
-	e.GET("/api/channelLogs", handler.GetChannelLogs())
-	e.GET("/api/channelDailyLogs", handler.GetChannelLogs())
+	// Start server with GraceShutdown
+	go func() {
+		if err := e.Start(fmt.Sprintf(":%s", cfg.Server.Port)); err != nil {
+			e.Logger.Info("shutting down the server.")
+		}
+	}()
 
-	e.Static("/*", "public")
+	// Wait for interrupt signal to gracefully shutdown the server with
+	// a timeout of 10 seconds.
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
 
-	e.Logger.Fatal(e.Start(":8000"))
+	<-quit
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	if err := e.Shutdown(ctx); err != nil {
+		e.Logger.Fatal(err)
+	}
 }

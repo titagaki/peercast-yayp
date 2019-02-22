@@ -5,22 +5,25 @@ import (
 	"time"
 
 	"peercast-yayp/config"
-	"peercast-yayp/models"
+	"peercast-yayp/database"
+	"peercast-yayp/model"
 	"peercast-yayp/peercast"
+	"peercast-yayp/repositoriy"
 )
 
 func SyncChannel() {
 	t := time.Now()
 	fmt.Println("Time's up! @", t.UTC())
 
-	db, err := models.NewDB(config.GetConfig())
+	db, err := database.NewDB(config.GetConfig())
 	if err != nil {
 		panic(err)
 
 		// ToDo: log
 		return
 	}
-	channels := db.FindPlayingChannels()
+	channelRepo := repositoriy.NewChannelRepository(db)
+	channels := channelRepo.FindPlayingChannels()
 
 	data, err := peercast.GetStatXML()
 	if err != nil {
@@ -61,7 +64,7 @@ func SyncChannel() {
 		if ok {
 			delete(channelsMap, v.ID)
 		} else {
-			channel = new(models.Channel)
+			channel = new(model.Channel)
 		}
 
 		channel.GnuID = v.ID
@@ -85,11 +88,7 @@ func SyncChannel() {
 		channel.TrackerDirect = tracker.Direct
 		channel.IsPlaying = true
 
-		if db.NewRecord(channel) {
-			db.Create(channel)
-		} else {
-			db.Save(channel)
-		}
+		channelRepo.SaveOrCreate(channel)
 	}
 
 	for _, c := range channelsMap {
@@ -100,8 +99,8 @@ func SyncChannel() {
 	//fmt.Printf("%+v", channels)
 }
 
-func makeChannelsMap(channels []*models.Channel) map[string]*models.Channel {
-	cMap := map[string]*models.Channel{}
+func makeChannelsMap(channels []*model.Channel) map[string]*model.Channel {
+	cMap := map[string]*model.Channel{}
 
 	for _, c := range channels {
 		cMap[c.GnuID] = c

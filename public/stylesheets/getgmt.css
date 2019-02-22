@@ -14,7 +14,7 @@ header {
   border-right: #dddddd 2px solid; }
   header .title {
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    margin: 0 0 1.8em; }
+    margin: 0em; }
 
 a:link {
   color: #aad5ff;
@@ -30,10 +30,6 @@ a:hover {
 
 div.footer {
   font-size: 90%; }
-
-div.powered {
-  font-size: 80%;
-  font-weight: bold; }
 
 h4 {
   border-left: 10px solid;

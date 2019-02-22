@@ -1,20 +1,25 @@
 package peercast
 
 import (
+	"fmt"
 	"net/http"
+
+	"peercast-yayp/config"
 )
 
-const viewStatXML = "http://localhost:7145/admin?cmd=viewxml"
-const username = "root"
-const password = "peer"
-
 func requestViewStatXML() (*http.Response, error) {
+	cfg := config.GetConfig()
+	viewStatXML := fmt.Sprintf("http://%s:%s/admin?cmd=viewxml",
+		cfg.Peercast.Host, cfg.Peercast.Port)
+
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", viewStatXML, nil)
 	if err != nil {
 		return nil, err
 	}
-	req.SetBasicAuth(username, password)
+	if cfg.Peercast.AuthType == "basic" {
+		req.SetBasicAuth(cfg.Peercast.AuthPassword, cfg.Peercast.AuthPassword)
+	}
 	resp, err := client.Do(req)
 
 	return resp, err

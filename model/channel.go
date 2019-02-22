@@ -1,4 +1,4 @@
-package models
+package model
 
 import (
 	"time"
@@ -7,7 +7,7 @@ import (
 type Channel struct {
 	ID              uint
 	GnuID           string `gorm:"size:32"`
-	Name            string `gorm:"index"`
+	Name            string `gorm:"size:100;index"`
 	Bitrate         int
 	ContentType     string
 	Listeners       int
@@ -28,12 +28,4 @@ type Channel struct {
 	IsPlaying       bool `gorm:"index"`
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
-}
-
-func (db *DB) FindPlayingChannels() []*Channel {
-
-	channel := make([]*Channel, 0)
-	db.Where("is_playing = ?", true).Find(&channel)
-
-	return channel
 }

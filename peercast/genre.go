@@ -2,9 +2,9 @@ package peercast
 
 import (
 	"strings"
-)
 
-var ypPrefix = "sp"
+	"peercast-yayp/config"
+)
 
 const (
 	RestrictionTypeNone int = iota
@@ -22,6 +22,7 @@ type StreamOptions struct {
 }
 
 func ParseGenre(s string) (o StreamOptions, ok bool) {
+	ypPrefix := config.GetConfig().Server.YPPrefix
 	if !strings.HasPrefix(s, ypPrefix) {
 		return o, false
 	}

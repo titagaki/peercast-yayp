@@ -1,13 +1,17 @@
-[yp]
-    prefix = "mp"
+[server]
+    Port     = "8000"
+    YPPrefix = "mp"
 
 [database]
-    host   = "localhost"
-    port   = "3306"
-    user   = "root"
-    password = "password"
-    db     = "yayp"
+    Host     = "localhost"
+    Port     = "3306"
+    User     = "root"
+    Password = "password"
+    DB       = "yayp"
 
 [peercast]
-    port   = "7145"
-    host   = "yayp-peercast"
+    Host         = "localhost"
+    Port         = "7145"
+    Auth         = "basic"
+    AuthUser     = "root"
+    AuthPassword = "peer"

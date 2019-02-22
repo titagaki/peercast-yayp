@@ -6,17 +6,19 @@ import (
 	"github.com/labstack/echo"
 
 	"peercast-yayp/config"
-	"peercast-yayp/models"
+	"peercast-yayp/database"
+	"peercast-yayp/repositoriy"
 )
 
 func GetChannels() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		db, err := models.NewDB(config.GetConfig())
+		db, err := database.NewDB(config.GetConfig())
 		if err != nil {
 			return err
 		}
 
-		channels := db.FindPlayingChannels()
+		channelRepo := repositoriy.NewChannelRepository(db)
+		channels := channelRepo.FindPlayingChannels()
 
 		return c.JSON(http.StatusOK, channels)
 	}

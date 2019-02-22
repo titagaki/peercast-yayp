@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS channel_logs (
   `log_time`         DATETIME,     -- 日時
   `channel_id`       INT UNSIGNED, -- channels.idの外部キー
   `gnu_id`           VARCHAR(32),  -- チャンネルID
-  `name`             VARCHAR(255), -- チャンネル名
+  `name`             VARCHAR(100), -- チャンネル名
   `bitrate`          INT,          -- ビットレート (単位はkbps)
   `content_type`     VARCHAR(255), -- コンテナタイプ (WMV,FLV,MKVなど)
   `listeners`        INT,          -- リスナー数
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS channel_logs (
 CREATE TABLE IF NOT EXISTS channel_daily_logs (
   `id`               INT UNSIGNED AUTO_INCREMENT,
   `log_date`         DATE,         -- 日付
-  `name`             VARCHAR(255), -- チャンネル名
+  `name`             VARCHAR(100), -- チャンネル名
   PRIMARY KEY (`id`),
   UNIQUE INDEX uix_channel_daily_logs_log_date_name (`log_date`, `name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,4 +1,4 @@
-package models
+package database
 
 import (
 	"fmt"
@@ -10,11 +10,7 @@ import (
 	"peercast-yayp/config"
 )
 
-type DB struct {
-	*gorm.DB
-}
-
-func NewDB(conf *config.Config) (*DB, error) {
+func NewDB(conf *config.Config) (*gorm.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True&loc=Local",
 		conf.Database.User,
 		conf.Database.Password,
@@ -31,5 +27,5 @@ func NewDB(conf *config.Config) (*DB, error) {
 	// ログ出力
 	db.LogMode(true)
 
-	return &DB{db}, nil
+	return db, nil
 }

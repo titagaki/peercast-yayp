@@ -1,4 +1,4 @@
-package models
+package model
 
 import (
 	"time"
@@ -9,7 +9,7 @@ type ChannelLog struct {
 	LogTime         time.Time `gorm:"type:datetime;unique_index:uix_channel_logs_log_time_name"`
 	ChannelID       uint      `gorm:"index"`
 	GnuID           string    `gorm:"size:32"`
-	Name            string    `gorm:"unique_index:uix_channel_logs_log_time_name"`
+	Name            string    `gorm:"size:100;unique_index:uix_channel_logs_log_time_name"`
 	Bitrate         int
 	ContentType     string
 	Listeners       int
@@ -25,14 +25,4 @@ type ChannelLog struct {
 	TrackGenre      string
 	TrackContact    string
 	HiddenListeners bool
-}
-
-func (db *DB) FindChannelLogsByNameAndLogTime(name string, logTime time.Time) []*ChannelLog {
-	start := logTime.Truncate(24 * time.Hour)
-	end := start.Add(24 * time.Hour)
-
-	logs := make([]*ChannelLog, 0)
-	db.Where("name = ? and log_time => ? and log_time < ?", name, start, end).Find(&logs)
-
-	return logs
 }

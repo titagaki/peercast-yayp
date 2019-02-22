@@ -5,8 +5,9 @@ import (
 )
 
 type Config struct {
-	YP struct {
-		Prefix string
+	Server struct {
+		Port     string
+		YPPrefix string
 	}
 	Database struct {
 		Host     string
@@ -16,8 +17,11 @@ type Config struct {
 		DB       string
 	}
 	Peercast struct {
-		Host string
-		Port string
+		Host         string
+		Port         string
+		AuthType     string
+		AuthUser     string
+		AuthPassword string
 	}
 }
 
