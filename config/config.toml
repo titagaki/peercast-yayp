@@ -1,6 +1,8 @@
 [server]
-    Port     = "8000"
     YPPrefix = "mp"
+    Port     = "8000"
+    LogPath  = "logs/yp.log"
+    Debug    = true
 
 [database]
     Host     = "localhost"

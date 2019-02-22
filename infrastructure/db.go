@@ -1,4 +1,4 @@
-package database
+package infrastructure
 
 import (
 	"fmt"
@@ -10,13 +10,13 @@ import (
 	"peercast-yayp/config"
 )
 
-func NewDB(conf *config.Config) (*gorm.DB, error) {
+func NewDB(cfg *config.Config) (*gorm.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True&loc=Local",
-		conf.Database.User,
-		conf.Database.Password,
-		conf.Database.Host,
-		conf.Database.Port,
-		conf.Database.DB,
+		cfg.Database.User,
+		cfg.Database.Password,
+		cfg.Database.Host,
+		cfg.Database.Port,
+		cfg.Database.DB,
 	)
 
 	db, err := gorm.Open("mysql", dsn)
@@ -24,8 +24,9 @@ func NewDB(conf *config.Config) (*gorm.DB, error) {
 		return nil, errors.Wrap(err, "failed to connect database")
 	}
 
-	// ログ出力
-	db.LogMode(true)
+	if cfg.Server.Debug {
+		db.LogMode(true)
+	}
 
 	return db, nil
 }

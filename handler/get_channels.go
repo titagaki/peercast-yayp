@@ -6,13 +6,13 @@ import (
 	"github.com/labstack/echo"
 
 	"peercast-yayp/config"
-	"peercast-yayp/database"
+	"peercast-yayp/infrastructure"
 	"peercast-yayp/repositoriy"
 )
 
 func GetChannels() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		db, err := database.NewDB(config.GetConfig())
+		db, err := infrastructure.NewDB(config.GetConfig())
 		if err != nil {
 			return err
 		}

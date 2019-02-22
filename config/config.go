@@ -8,6 +8,8 @@ type Config struct {
 	Server struct {
 		Port     string
 		YPPrefix string
+		LogPath  string
+		Debug    bool
 	}
 	Database struct {
 		Host     string

@@ -8,21 +8,27 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
+	gocache "github.com/patrickmn/go-cache"
 
 	"peercast-yayp/config"
-	"peercast-yayp/database"
+	"peercast-yayp/infrastructure"
+	"peercast-yayp/model"
 	"peercast-yayp/repositoriy"
 )
 
 func IndexTxt() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		db, err := database.NewDB(config.GetConfig())
-		if err != nil {
-			return err
-		}
 
-		channelRepo := repositoriy.NewChannelRepository(db)
-		channels := channelRepo.FindPlayingChannels()
+		channels, ok := getCachedCannels(c)
+		if !ok {
+			db, err := infrastructure.NewDB(config.GetConfig())
+			if err != nil {
+				return err
+			}
+
+			channelRepo := repositoriy.NewChannelRepository(db)
+			channels = channelRepo.FindPlayingChannels()
+		}
 
 		s := make([]byte, 0, 100)
 
@@ -74,6 +80,20 @@ func IndexTxt() echo.HandlerFunc {
 		}
 		return c.String(http.StatusOK, string(s))
 	}
+}
+
+func getCachedCannels(c echo.Context) (model.ChannelList, bool) {
+	cache, ok := c.Get("cache").(*gocache.Cache)
+	if !ok {
+		return nil, false
+	}
+
+	channels, ok := cache.Get("ChannelList")
+	if !ok {
+		return nil, false
+	}
+
+	return channels.(model.ChannelList), true
 }
 
 func btos(b bool) string {

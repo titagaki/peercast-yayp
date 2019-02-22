@@ -5,17 +5,19 @@ import (
 	"time"
 
 	"peercast-yayp/config"
-	"peercast-yayp/database"
+	"peercast-yayp/infrastructure"
 	"peercast-yayp/model"
 	"peercast-yayp/peercast"
 	"peercast-yayp/repositoriy"
+
+	gocache "github.com/patrickmn/go-cache"
 )
 
-func SyncChannel() {
+func SyncChannel(cache *gocache.Cache) {
 	t := time.Now()
 	fmt.Println("Time's up! @", t.UTC())
 
-	db, err := database.NewDB(config.GetConfig())
+	db, err := infrastructure.NewDB(config.GetConfig())
 	if err != nil {
 		panic(err)
 
@@ -34,6 +36,8 @@ func SyncChannel() {
 
 	// チャンネルIDをキーとしたchannelsのmapを作成
 	channelsMap := makeChannelsMap(channels)
+
+	var newChannels model.ChannelList
 
 	for _, v := range data.ChannelsFound.Channel {
 
@@ -89,6 +93,8 @@ func SyncChannel() {
 		channel.IsPlaying = true
 
 		channelRepo.SaveOrCreate(channel)
+
+		newChannels = append(newChannels, channel)
 	}
 
 	for _, c := range channelsMap {
@@ -96,10 +102,12 @@ func SyncChannel() {
 		db.Save(c)
 	}
 
+	cache.Set("ChannelList", newChannels, gocache.DefaultExpiration)
+
 	//fmt.Printf("%+v", channels)
 }
 
-func makeChannelsMap(channels []*model.Channel) map[string]*model.Channel {
+func makeChannelsMap(channels model.ChannelList) map[string]*model.Channel {
 	cMap := map[string]*model.Channel{}
 
 	for _, c := range channels {

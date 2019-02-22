@@ -29,3 +29,5 @@ type Channel struct {
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
 }
+
+type ChannelList []*Channel
