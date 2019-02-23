@@ -16,7 +16,7 @@ func NewChannelLogRepository(db *gorm.DB) *ChannelLogRepository {
 	return &ChannelLogRepository{db}
 }
 
-func (db *ChannelLogRepository) CreateChannelLogs(logTime time.Time, channels model.ChannelList) {
+func (r *ChannelLogRepository) CreateChannelLogs(logTime time.Time, channels model.ChannelList) {
 	for _, c := range channels {
 		log := model.ChannelLog{
 			LogTime:         logTime,
@@ -39,7 +39,7 @@ func (db *ChannelLogRepository) CreateChannelLogs(logTime time.Time, channels mo
 			TrackContact:    c.TrackContact,
 			HiddenListeners: c.HiddenListeners,
 		}
-		db.Create(&log)
+		r.DB.Create(&log)
 	}
 }
 

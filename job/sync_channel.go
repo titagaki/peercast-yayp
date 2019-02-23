@@ -104,12 +104,11 @@ func SyncChannel(cache *gocache.Cache) {
 	repositoriy.NewCachedChannelRepository(cache).SetChannels(newChannels)
 
 	// 10分置きにログを追加
+	channelLogRepo := repositoriy.NewChannelLogRepository(db)
 	logTime := time.Now().Truncate(10 * time.Minute)
 	lastLogTime, ok := cache.Get("LastLogTime")
 	if !ok || logTime != lastLogTime.(time.Time) {
-		channelLogRepo := repositoriy.NewChannelLogRepository(db)
 		channelLogRepo.CreateChannelLogs(logTime, newChannels)
-
 		cache.Set("LastLogTime", logTime, gocache.DefaultExpiration)
 	}
 }

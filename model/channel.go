@@ -25,7 +25,7 @@ type Channel struct {
 	HiddenListeners bool
 	TrackerIP       string `gorm:"size:53"`
 	TrackerDirect   bool
-	IsPlaying       bool      `gorm:"index";json:"-"`
+	IsPlaying       bool      `gorm:"index" json:"-"`
 	CreatedAt       time.Time `json:"-"`
 	UpdatedAt       time.Time `json:"-"`
 }
