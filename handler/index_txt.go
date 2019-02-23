@@ -23,8 +23,20 @@ func IndexTxt() echo.HandlerFunc {
 			return errors.New("can't available cache")
 		}
 
-		channels, ok := repositoriy.NewCachedChannelRepository(cache).GetChannels()
+		cachedCRepo := repositoriy.NewCachedChannelRepository(cache)
+		cachedIRepo := repositoriy.NewCachedInformationRepository(cache)
+
+		cacheAvailable := true
+		channels, ok := cachedCRepo.GetChannels()
 		if !ok {
+			cacheAvailable = false
+		}
+		info, ok := cachedIRepo.GetInfo()
+		if !ok {
+			cacheAvailable = false
+		}
+
+		if !cacheAvailable {
 			db, err := infrastructure.NewDB(config.GetConfig())
 			if err != nil {
 				return err
@@ -32,6 +44,10 @@ func IndexTxt() echo.HandlerFunc {
 			defer db.Close()
 
 			channels = repositoriy.NewChannelRepository(db).FindPlayingChannels()
+			info = repositoriy.NewInformationRepository(db).Find()
+
+			cachedCRepo.SetChannels(channels)
+			cachedIRepo.SetInfo(info)
 		}
 
 		channels = channels.HideListeners()
@@ -78,6 +94,18 @@ func IndexTxt() echo.HandlerFunc {
 			s = append(s, btos(c.TrackerDirect)...)
 			s = append(s, "\n"...)
 		}
+
+		for _, i := range info {
+			s = append(s, html.EscapeString(i.Name)...)
+			s = append(s, "<>00000000000000000000000000000000<><><><>"...)
+			s = append(s, html.EscapeString(i.Description)...)
+			s = append(s, "<>"...)
+			s = append(s, strconv.Itoa(i.Priority)...)
+			s = append(s, "<>"...)
+			s = append(s, strconv.Itoa(i.Priority)...)
+			s = append(s, "<>0<>RAW<><><><><><>00:00<>click<><>0\n"...)
+		}
+
 		return c.String(http.StatusOK, string(s))
 	}
 }

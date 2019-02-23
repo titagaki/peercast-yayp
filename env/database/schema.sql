@@ -67,3 +67,14 @@ CREATE TABLE IF NOT EXISTS channel_daily_summaries (
   PRIMARY KEY (`id`),
   UNIQUE INDEX uix_channel_daily_logs_log_date_name (`log_date`, `name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- お知らせ
+CREATE TABLE IF NOT EXISTS information (
+  `id`          INT UNSIGNED AUTO_INCREMENT,
+  `name`        VARCHAR(255), -- タイトル
+  `description` VARCHAR(255), -- 概要
+  `created_at`  TIMESTAMP NULL,
+  `updated_at`  TIMESTAMP NULL,
+  `deleted_at`  TIMESTAMP NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
