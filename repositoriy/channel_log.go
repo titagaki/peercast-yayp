@@ -43,19 +43,21 @@ func (db *ChannelLogRepository) CreateChannelLogs(logTime time.Time, channels mo
 	}
 }
 
-func (db *ChannelLogRepository) FindChannelDailyLogByName(name string) []*model.ChannelDailyLog {
-	logs := make([]*model.ChannelDailyLog, 0)
-	db.Where("name = ?", name).Find(&logs)
-
-	return logs
-}
-
-func (db *ChannelLogRepository) FindChannelLogsByNameAndLogTime(name string, logTime time.Time) []*model.ChannelLog {
-	start := logTime.Truncate(24 * time.Hour)
+func (r *ChannelLogRepository) FindChannelLogsByNameAndLogTime(name string, logTime time.Time) []*model.ChannelLog {
+	start := time.Date(logTime.Year(), logTime.Month(), logTime.Day(), 0, 0, 0, 0, time.Local)
 	end := start.Add(24 * time.Hour)
 
 	logs := make([]*model.ChannelLog, 0)
-	db.Where("name = ? and log_time => ? and log_time < ?", name, start, end).Find(&logs)
+	r.DB.Where("name = ? and log_time >= ? and log_time < ?", name, start, end).Find(&logs)
+	return logs
+}
 
+func (r *ChannelLogRepository) FindChannelLogsByLogTime(logTime time.Time) []*model.ChannelLog {
+	start := time.Date(logTime.Year(), logTime.Month(), logTime.Day(), 0, 0, 0, 0, time.Local)
+	end := start.Add(24 * time.Hour)
+
+	logs := make([]*model.ChannelLog, 0)
+	r.DB.Where("log_time >= ? and log_time < ?", start, end).
+		Order("name asc, log_time asc").Find(&logs)
 	return logs
 }

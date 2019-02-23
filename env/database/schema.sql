@@ -56,11 +56,14 @@ CREATE TABLE IF NOT EXISTS channel_logs (
   INDEX idx_channel_logs_channel_id (`channel_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- チャンネルログ日付
-CREATE TABLE IF NOT EXISTS channel_daily_logs (
-  `id`               INT UNSIGNED AUTO_INCREMENT,
-  `log_date`         DATE,         -- 日付
-  `name`             VARCHAR(255), -- チャンネル名
+-- チャンネル日別集計
+CREATE TABLE IF NOT EXISTS channel_daily_summaries (
+  `id`                INT UNSIGNED AUTO_INCREMENT,
+  `log_date`          DATE,         -- 日付
+  `name`              VARCHAR(255), -- チャンネル名
+  `num_logs`          INT,          -- ログ数
+  `max_listeners`     INT,          -- 最大視聴者数
+  `average_listeners` DOUBLE,       -- 平均視聴者数
   PRIMARY KEY (`id`),
   UNIQUE INDEX uix_channel_daily_logs_log_date_name (`log_date`, `name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

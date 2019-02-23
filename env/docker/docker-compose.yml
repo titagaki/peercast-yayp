@@ -12,7 +12,7 @@ services:
     ports:
       - "${PEERCAST_PORT}:7144"
     volumes:
-      - ./data/peercast.ini:/peercast-yt/peercast.ini
+      - ${VOLUMES_PATH}/peercast.ini:/peercast-yt/peercast.ini
     container_name: yayp-peercast
   mariadb:
     restart: always
@@ -20,7 +20,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ${VOLUMES_PATH}/mysql:/var/lib/mysql
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"  
       - "MYSQL_DATABASE=${MYSQL_DATABASE}"

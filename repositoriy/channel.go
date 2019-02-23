@@ -14,17 +14,17 @@ func NewChannelRepository(db *gorm.DB) *ChannelRepository {
 	return &ChannelRepository{db}
 }
 
-func (db *ChannelRepository) SaveOrCreate(channel *model.Channel) {
-	if db.NewRecord(channel) {
-		db.Create(channel)
+func (r *ChannelRepository) SaveOrCreate(channel *model.Channel) {
+	if r.DB.NewRecord(channel) {
+		r.DB.Create(channel)
 	} else {
-		db.Save(channel)
+		r.DB.Save(channel)
 	}
 }
 
-func (db *ChannelRepository) FindPlayingChannels() model.ChannelList {
+func (r *ChannelRepository) FindPlayingChannels() model.ChannelList {
 	channel := make([]*model.Channel, 0)
-	db.Where("is_playing = ?", true).Find(&channel)
+	r.DB.Where("is_playing = ?", true).Find(&channel)
 
 	return channel
 }

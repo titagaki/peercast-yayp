@@ -14,12 +14,12 @@ func NewCachedChannelRepository(cache *gocache.Cache) *CachedChannelRepository {
 	return &CachedChannelRepository{cache}
 }
 
-func (cache *CachedChannelRepository) SetChannels(channels model.ChannelList) {
-	cache.Set("ChannelList", channels, gocache.DefaultExpiration)
+func (r *CachedChannelRepository) SetChannels(channels model.ChannelList) {
+	r.Cache.Set("ChannelList", channels, gocache.DefaultExpiration)
 }
 
-func (cache *CachedChannelRepository) GetChannels() (model.ChannelList, bool) {
-	channels, ok := cache.Get("ChannelList")
+func (r *CachedChannelRepository) GetChannels() (model.ChannelList, bool) {
+	channels, ok := r.Cache.Get("ChannelList")
 	if !ok {
 		return nil, false
 	}

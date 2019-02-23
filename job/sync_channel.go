@@ -1,27 +1,24 @@
 package job
 
 import (
-	"fmt"
 	"time"
+
+	"github.com/labstack/gommon/log"
+	gocache "github.com/patrickmn/go-cache"
 
 	"peercast-yayp/config"
 	"peercast-yayp/infrastructure"
 	"peercast-yayp/model"
 	"peercast-yayp/peercast"
 	"peercast-yayp/repositoriy"
-
-	gocache "github.com/patrickmn/go-cache"
 )
 
 func SyncChannel(cache *gocache.Cache) {
-	t := time.Now()
-	fmt.Println("Time's up! @", t.UTC())
+	log.Info("SyncChannel is started")
 
 	db, err := infrastructure.NewDB(config.GetConfig())
 	if err != nil {
-		panic(err)
-
-		// ToDo: log
+		log.Error(err)
 		return
 	}
 	defer db.Close()
@@ -31,8 +28,7 @@ func SyncChannel(cache *gocache.Cache) {
 
 	data, err := peercast.GetStatXML()
 	if err != nil {
-		panic(err)
-		// ToDo: log
+		log.Error(err)
 		return
 	}
 

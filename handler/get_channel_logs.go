@@ -53,7 +53,7 @@ func parseDateStr(str string) (t time.Time, ok bool) {
 		offset += size
 	}
 
-	d := time.Date(ymd[0], time.Month(ymd[1]), ymd[2], 0, 0, 0, 0, time.UTC)
+	d := time.Date(ymd[0], time.Month(ymd[1]), ymd[2], 0, 0, 0, 0, time.Local)
 
 	return d, true
 }
