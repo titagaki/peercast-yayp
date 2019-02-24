@@ -3,20 +3,18 @@ package job
 import (
 	"time"
 
-	"github.com/labstack/gommon/log"
-
-	"peercast-yayp/config"
 	"peercast-yayp/infrastructure"
 	"peercast-yayp/model"
 	"peercast-yayp/repositoriy"
 )
 
 func DailySummary() {
-	log.Info("DailySummary is started")
+	logger, _ := infrastructure.NewLogger("job")
+	logger.Info("DailySummary is started")
 
-	db, err := infrastructure.NewDB(config.GetConfig())
+	db, err := infrastructure.NewDB()
 	if err != nil {
-		log.Error(err)
+		logger.Error(err)
 		return
 	}
 	defer db.Close()

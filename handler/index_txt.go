@@ -11,7 +11,6 @@ import (
 	"github.com/labstack/echo"
 	gocache "github.com/patrickmn/go-cache"
 
-	"peercast-yayp/config"
 	"peercast-yayp/infrastructure"
 	"peercast-yayp/repositoriy"
 )
@@ -37,7 +36,7 @@ func IndexTxt() echo.HandlerFunc {
 		}
 
 		if !cacheAvailable {
-			db, err := infrastructure.NewDB(config.GetConfig())
+			db, err := infrastructure.NewDB()
 			if err != nil {
 				return err
 			}

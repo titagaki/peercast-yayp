@@ -1,12 +1,11 @@
 package job
 
 import (
+	"github.com/labstack/gommon/log"
 	"time"
 
-	"github.com/labstack/gommon/log"
 	gocache "github.com/patrickmn/go-cache"
 
-	"peercast-yayp/config"
 	"peercast-yayp/infrastructure"
 	"peercast-yayp/model"
 	"peercast-yayp/peercast"
@@ -14,9 +13,10 @@ import (
 )
 
 func SyncChannel(cache *gocache.Cache) {
-	log.Info("SyncChannel is started")
+	logger, _ := infrastructure.NewLogger("job")
+	logger.Info("SyncChannel is started")
 
-	db, err := infrastructure.NewDB(config.GetConfig())
+	db, err := infrastructure.NewDB()
 	if err != nil {
 		log.Error(err)
 		return
@@ -28,7 +28,7 @@ func SyncChannel(cache *gocache.Cache) {
 
 	data, err := peercast.GetStatXML()
 	if err != nil {
-		log.Error(err)
+		logger.Error(err)
 		return
 	}
 
@@ -109,7 +109,7 @@ func SyncChannel(cache *gocache.Cache) {
 	lastLogTime, ok := cache.Get("LastLogTime")
 	if !ok || logTime != lastLogTime.(time.Time) {
 		channelLogRepo.CreateChannelLogs(logTime, newChannels)
-		cache.Set("LastLogTime", logTime, gocache.DefaultExpiration)
+		cache.Set("LastLogTime", logTime, gocache.NoExpiration)
 	}
 }
 

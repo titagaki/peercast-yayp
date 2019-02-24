@@ -1,7 +1,7 @@
 [server]
     YPPrefix = "mp"
     Port     = "8000"
-    LogPath  = "logs/yp.log"
+    LogPath  = "yp.log"
     Debug    = true
 
 [database]

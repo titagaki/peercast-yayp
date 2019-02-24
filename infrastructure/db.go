@@ -10,8 +10,10 @@ import (
 	"peercast-yayp/config"
 )
 
-func NewDB(cfg *config.Config) (*gorm.DB, error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True&loc=Local&timeout=15s",
+func NewDB() (*gorm.DB, error) {
+	cfg := config.GetConfig()
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local&timeout=15s",
 		cfg.Database.User,
 		cfg.Database.Password,
 		cfg.Database.Host,
@@ -26,6 +28,11 @@ func NewDB(cfg *config.Config) (*gorm.DB, error) {
 
 	if cfg.Server.Debug {
 		db.LogMode(true)
+		logW, err := NewLogger("db")
+		if err != nil {
+			return nil, err
+		}
+		db.SetLogger(logW)
 	}
 
 	return db, nil

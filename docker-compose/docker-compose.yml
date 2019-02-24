@@ -1,11 +1,11 @@
 version: '3'
 services:
-  #yayp:
-  #  restart: always
-  #  build: ../../
-  #  ports:
-  #    - "8000:80"
-  #  container_name: yayp-web
+  yayp:
+    restart: always
+    build: ..
+    ports:
+     - "8000:8000"
+    container_name: yayp-web
   peercast:
     restart: always
     image: titagaki/peercast-yt:latest
@@ -20,7 +20,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ${VOLUMES_PATH}/mysql:/var/lib/mysql
+    - ./sql:/docker-entrypoint-initdb.d
+    - ${VOLUMES_PATH}/mysql:/var/lib/mysql
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"  
       - "MYSQL_DATABASE=${MYSQL_DATABASE}"

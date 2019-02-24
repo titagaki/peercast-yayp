@@ -1,4 +1,4 @@
-env/docker/data/
+bin/
 vendor/
 .idea
 .DS_Store

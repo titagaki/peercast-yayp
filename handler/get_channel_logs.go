@@ -8,7 +8,6 @@ import (
 
 	"github.com/labstack/echo"
 
-	"peercast-yayp/config"
 	"peercast-yayp/infrastructure"
 	"peercast-yayp/repositoriy"
 )
@@ -23,7 +22,7 @@ func GetChannelLogs() echo.HandlerFunc {
 			return errors.New("error")
 		}
 
-		db, err := infrastructure.NewDB(config.GetConfig())
+		db, err := infrastructure.NewDB()
 		if err != nil {
 			return err
 		}
