@@ -1,1 +1,5 @@
-INSERT INTO yayp.information (id, name, description, created_at, updated_at, deleted_at) VALUES (1, 'MP◆Status', '稼働中', '2019-02-23 08:12:34', '2019-02-23 08:16:06', null);
+INSERT INTO information (
+  `name`, `description`, `created_at`, `updated_at`, `deleted_at`
+) VALUES (
+  'MP◆Status', '稼働中', NOW(), NOW(), null
+);

@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ${VOLUMES_PATH}/config.toml:/root/config/config.toml
+      - ${VOLUMES_PATH}/yayp.toml:/root/peercast-yayp/yayp.toml
     container_name: yayp-web
   mariadb:
     restart: always

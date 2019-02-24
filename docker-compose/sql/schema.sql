@@ -1,4 +1,3 @@
-
 -- チャンネル情報
 CREATE TABLE IF NOT EXISTS channels (
   `id`               INT UNSIGNED AUTO_INCREMENT,

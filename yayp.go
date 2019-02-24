@@ -12,7 +12,7 @@ import (
 )
 
 func initConfig() (*config.Config, error) {
-	configPath := flag.String("config", "config/config.toml", "path of the config file")
+	configPath := flag.String("config", "./yayp.toml", "path of the config file")
 	flag.Parse()
 
 	cfg, err := config.FromFile(*configPath)
