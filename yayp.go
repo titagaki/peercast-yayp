@@ -3,8 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/pkg/errors"
 	"os"
+
+	"github.com/pkg/errors"
+
 	"peercast-yayp/config"
 	"peercast-yayp/infrastructure"
 	"peercast-yayp/job"
