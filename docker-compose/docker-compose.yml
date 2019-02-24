@@ -4,8 +4,21 @@ services:
     restart: always
     build: ..
     ports:
-     - "8000:8000"
+      - "8000:8000"
+    volumes:
+      - ${VOLUMES_PATH}/config.toml:/root/config/config.toml
     container_name: yayp-web
+  mariadb:
+    restart: always
+    image: mariadb:10.3
+    ports:
+      - "3306:3306"
+    volumes:
+      - ${VOLUMES_PATH}/mysql:/var/lib/mysql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"  
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
+    container_name: yayp-mariadb
   peercast:
     restart: always
     image: titagaki/peercast-yt:latest
@@ -14,15 +27,3 @@ services:
     volumes:
       - ${VOLUMES_PATH}/peercast.ini:/peercast-yt/peercast.ini
     container_name: yayp-peercast
-  mariadb:
-    restart: always
-    image: mariadb:10.3
-    ports:
-      - "3306:3306"
-    volumes:
-    - ./sql:/docker-entrypoint-initdb.d
-    - ${VOLUMES_PATH}/mysql:/var/lib/mysql
-    environment:
-      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"  
-      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
-    container_name: yayp-mariadb
