@@ -6,7 +6,7 @@ import (
 
 type Channel struct {
 	ID              uint
-	GnuID           string `gorm:"size:32"`
+	CID             string `gorm:"column:cid;size:32"`
 	Name            string `gorm:"index"`
 	Bitrate         int
 	ContentType     string

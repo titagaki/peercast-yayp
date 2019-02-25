@@ -56,7 +56,7 @@ func IndexTxt() echo.HandlerFunc {
 		for _, c := range channels {
 			s = append(s, html.EscapeString(c.Name)...)
 			s = append(s, "<>"...)
-			s = append(s, html.EscapeString(c.GnuID)...)
+			s = append(s, html.EscapeString(c.CID)...)
 			s = append(s, "<>"...)
 			s = append(s, html.EscapeString(c.TrackerIP)...)
 			s = append(s, "<>"...)

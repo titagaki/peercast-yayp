@@ -21,7 +21,7 @@ func (r *ChannelLogRepository) CreateChannelLogs(logTime time.Time, channels mod
 		log := model.ChannelLog{
 			LogTime:         logTime,
 			ChannelID:       c.ID,
-			GnuID:           c.GnuID,
+			CID:             c.CID,
 			Name:            c.Name,
 			Bitrate:         c.Bitrate,
 			ContentType:     c.ContentType,

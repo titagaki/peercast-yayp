@@ -8,7 +8,7 @@ type ChannelLog struct {
 	ID              uint
 	LogTime         time.Time `gorm:"type:datetime;unique_index:uix_channel_logs_log_time_name"`
 	ChannelID       uint      `gorm:"index"`
-	GnuID           string    `gorm:"size:32"`
+	CID             string    `gorm:"column:cid;size:32"`
 	Name            string    `gorm:"unique_index:uix_channel_logs_log_time_name"`
 	Bitrate         int
 	ContentType     string
@@ -25,4 +25,6 @@ type ChannelLog struct {
 	TrackGenre      string
 	TrackContact    string
 	HiddenListeners bool
+	CreatedAt       time.Time `json:"-"`
+	UpdatedAt       time.Time `json:"-"`
 }

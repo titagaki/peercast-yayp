@@ -11,4 +11,6 @@ type ChannelDailySummary struct {
 	NumLogs          int
 	MaxListeners     int
 	AverageListeners float32
+	CreatedAt        time.Time `json:"-"`
+	UpdatedAt        time.Time `json:"-"`
 }

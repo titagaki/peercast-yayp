@@ -1,9 +1,9 @@
 package job
 
 import (
-	"github.com/labstack/gommon/log"
 	"time"
 
+	"github.com/labstack/gommon/log"
 	gocache "github.com/patrickmn/go-cache"
 
 	"peercast-yayp/infrastructure"
@@ -69,7 +69,7 @@ func SyncChannel(cache *gocache.Cache) {
 			channel = new(model.Channel)
 		}
 
-		channel.GnuID = v.ID
+		channel.CID = v.ID
 		channel.Name = v.Name
 		channel.Bitrate = v.Bitrate
 		channel.ContentType = v.Type
@@ -117,7 +117,7 @@ func makeChannelsMap(channels model.ChannelList) map[string]*model.Channel {
 	cMap := map[string]*model.Channel{}
 
 	for _, c := range channels {
-		cMap[c.GnuID] = c
+		cMap[c.CID] = c
 	}
 	return cMap
 }
