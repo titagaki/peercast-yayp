@@ -31,6 +31,7 @@ func GetChannelLogs() echo.HandlerFunc {
 		channelLogRepo := repositoriy.NewChannelLogRepository(db)
 		logs := channelLogRepo.FindChannelLogsByNameAndLogTime(cn, logTime)
 
+		c.Response().Header().Set(echo.HeaderAccessControlAllowOrigin, "*")
 		return c.JSON(http.StatusOK, logs)
 	}
 }

@@ -1,7 +1,7 @@
 [server]
-    YPPrefix = "mp"
+    YPPrefix = "ap"
     Port     = "8000"
-    LogPath  = "yp.log"
+    LogPath  = "peercast-yayp.log"
     Debug    = true
 
 [database]

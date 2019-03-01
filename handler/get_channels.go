@@ -31,6 +31,7 @@ func GetChannels() echo.HandlerFunc {
 
 		channels = channels.HideListeners()
 
+		c.Response().Header().Set(echo.HeaderAccessControlAllowOrigin, "*")
 		return c.JSON(http.StatusOK, channels)
 	}
 }
