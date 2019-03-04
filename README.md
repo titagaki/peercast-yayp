@@ -35,12 +35,11 @@ Root Modeで起動して、いい感じに設定してください。（よく�
 
 - Server -> Mode : `Root`
 
-- Root Mode -> Host Update (sec) : 
+- Root Mode -> Host Update (sec) : `120`(default)
 
-  実装を見るとこの間隔で PCP_BCST パケットを送っている。
-  [github.com/plonk/peercast-yt/core/common/servmgr.cpp#L1973](https://github.com/plonk/peercast-yt/blob/2ee7ae929128532be550d035cd84a935ba70a13e/core/common/servmgr.cpp#L1973)
-
-  つまりどういうこと？
+  YP4Gのreadme.txtには60に設定とあった。
+  実装を調べると、この間隔でPCP_ROOTパケットを投げて、root情報の更新とトラッカーにPCP_BCSTパケット送信を促すのをやっている。
+  なんだけど、そもそもPeerCastStationではPCP_ROOTパケットは破棄するので、今では重要な設定値ではない。
 
 ### MySQLの設定
 
