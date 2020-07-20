@@ -24,6 +24,6 @@ services:
     image: titagaki/peercast-yt:latest
     ports:
       - "${PEERCAST_PORT}:7144"
-    volumes:
-      - ${VOLUMES_PATH}/peercast.ini:/peercast-yt/peercast.ini
+    environment:
+      - "PEERCAST_PASSWORD=${PEERCAST_PASSWORD}"  
     container_name: yayp-peercast
